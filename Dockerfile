@@ -11,14 +11,13 @@ RUN go mod download
 # builds go server, with force rebuild packages
 FROM golang:1.23.4 AS build-stage
 COPY --from=fetch-stage /server /server/
-WORKDIR /server
+WORKDIR /server/cmd/
 RUN CGO_ENABLED=0 GOOS=linux go build -a -o main .
 
 
 # runs go server
 FROM alpine:latest AS final
 COPY --from=build-stage /server/ /server/
-WORKDIR /server
-ENTRYPOINT ["/frontend/main"]
+ENTRYPOINT ["/server/cmd/main"]
 EXPOSE 80
 EXPOSE 443

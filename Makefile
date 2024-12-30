@@ -1,10 +1,8 @@
-.PHONY: run build build-server
-
 run: run-server
 build: build-server
 
 run-server:
-	./cmd/main
+	./cmd/bin/main
 
 build-server:
 	cd cmd && \

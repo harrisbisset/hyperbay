@@ -2,7 +2,8 @@ run: run-server
 build: build-server
 
 run-server:
-	./cmd/bin/main
+	cd cmd && \
+	./bin/main
 
 build-server:
 	cd cmd && \

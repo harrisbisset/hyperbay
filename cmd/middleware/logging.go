@@ -31,7 +31,7 @@ func (l *Logger) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		"method", r.Method,
 		"path", r.URL.Path,
 		"elasped", time.Since(start),
-		// "data", string(lrw.data),
+		"data", string(lrw.data),
 		"status", fmt.Sprintf("%d %s", lrw.statusCode, http.StatusText(lrw.statusCode)),
 	)
 }

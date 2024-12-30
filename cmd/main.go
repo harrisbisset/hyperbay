@@ -41,10 +41,9 @@ func main() {
 
 	// api
 	mux.HandleFunc("GET /api/list", middleware.ValidateRelayConfig(routes.ListHandler{RelayConfig: cfg.RelayConfig}))
-	mux.HandleFunc("GET /api/refresh", middleware.AuthHash(routes.RefreshHandler{RelayConfig: cfg.RelayConfig}))
+	http.HandleFunc("GET /api/random", middleware.ValidateRelayConfig(routes.RandomHandler{RelayConfig: cfg.RelayConfig}))
 
-	// OPTIONAL
-	// http.HandleFunc("GET /random", middleware.AuthHash(routes.RandomHandler{RelayConfig: cfg.RelayConfig}))
+	mux.HandleFunc("GET /api/refresh", middleware.AuthHash(routes.RefreshHandler{RelayConfig: cfg.RelayConfig}))
 
 	log.Fatal(http.ListenAndServe(":8080", middleware.NewLogger(mux, cfg.Logger)))
 }

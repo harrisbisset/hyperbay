@@ -18,7 +18,7 @@ type (
 )
 
 func (handler IndexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	tmpl := template.Must(template.ParseFiles("./cmd/templates/index.go.html"))
+	tmpl := template.Must(template.ParseFiles("./templates/index.go.html"))
 	tmpl.Execute(w, *handler.RelayConfig)
 }
 

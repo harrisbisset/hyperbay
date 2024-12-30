@@ -3,6 +3,7 @@ package routes
 import (
 	"encoding/json"
 	"log"
+	"math/rand/v2"
 	"net/http"
 
 	"github.com/harrisbisset/webrelay/toml"
@@ -20,8 +21,7 @@ type (
 		*toml.RelayConfig
 	}
 
-	// NOT RECOMMENDED
-	// used to get a random site from the server
+	// used to get a "random" site from the server
 	RandomHandler struct {
 		*toml.RelayConfig
 	}
@@ -61,7 +61,10 @@ func (handler RefreshHandler) GetRelayConfig() *toml.RelayConfig {
 }
 
 func (handler RandomHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	log.Print("random")
+	log.Print(handler.Sites[rand.IntN(len(handler.Sites)-1)].Src)
 
+	http.Redirect(w, r, handler.Sites[rand.IntN(len(handler.Sites)-1)].Src, http.StatusPermanentRedirect)
 }
 
 func (handler RandomHandler) GetRelayConfig() *toml.RelayConfig {

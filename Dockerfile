@@ -3,7 +3,7 @@
 # copies all server go files, and relay.toml, into /server directory
 # and fetches go dependencies
 FROM golang:1.23.4 AS fetch-stage
-COPY relay.toml /cmd /server/
+COPY /cmd /server/
 WORKDIR /server
 RUN go mod download
 

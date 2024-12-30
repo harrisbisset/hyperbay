@@ -1,10 +1,24 @@
 package config
 
-import "github.com/harrisbisset/webrelay/toml"
+import (
+	"log"
+	"log/slog"
+	"net/http"
 
-type Config struct {
-	*toml.RelayConfig
-}
+	"github.com/harrisbisset/webrelay/toml"
+)
+
+type (
+	Config struct {
+		*toml.RelayConfig
+		*slog.Logger
+	}
+
+	RelayConfigHandler interface {
+		http.Handler
+		GetRelayConfig() *toml.RelayConfig
+	}
+)
 
 func NewConfig() Config {
 	relay, err := toml.ParseRelay()
@@ -12,7 +26,12 @@ func NewConfig() Config {
 		panic(err)
 	}
 
+	if relay.Hash == "" {
+		log.Print("WARNING: hash is empty")
+	}
+
 	return Config{
+		Logger:      slog.Default(),
 		RelayConfig: relay,
 	}
 }

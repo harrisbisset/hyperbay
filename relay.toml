@@ -1,4 +1,16 @@
-[[sites]]
-src = "https://www.example.com"
-name = "example"
+hash = ""
+hostUser = "harris bisset"
+hostEmail = "harrisbisset@gmail.com"
 
+# list of sites below
+[[sites]]
+slug = "exmpl"
+name = "example"
+src = "https://www.example.com"
+url = "example.com"
+
+[[sites]]
+slug = "hb"
+name = "harris bisset"
+src = "https://bisset.dev"
+url = "bisset.dev"

@@ -1,4 +1,4 @@
-package routes
+package api
 
 import (
 	"encoding/json"
@@ -6,7 +6,7 @@ import (
 	"math/rand/v2"
 	"net/http"
 
-	"github.com/harrisbisset/webrelay/toml"
+	"github.com/harrisbisset/webrelay/service/toml"
 )
 
 type (

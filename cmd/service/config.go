@@ -1,9 +1,9 @@
-package config
+package service
 
 import (
 	"log"
 
-	"github.com/harrisbisset/webrelay/toml"
+	"github.com/harrisbisset/webrelay/service/toml"
 )
 
 type (

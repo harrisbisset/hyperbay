@@ -1,19 +1,16 @@
 # Webring Server
 
-## Routes
+## relay.toml
 
-Basic:
+```toml
+hash = ""
+hostUser = ""
+hostEmail = ""
 
-- GET /list
-  - Returns JSON of all available sites
-- GET /refresh
-  - Requires the request to have a ```hash``` header matching the server
-  - Requests the server to update the relay list
-
-Optional:
-
-- GET /random
-  - NO RECOMMENDED, if possible implement from the client-side
-  - Gets a random site from the site list
-
-## Docker
+[[sites]]
+slug = "exmpl" # text without spaces, used when name may not be appropriate (e.g. routes)
+name = "example" # name of site
+src = "" # link to site
+url = "example.com" # display text for site link
+dead = true # whether link is dead, service will modify this field, if the link is found to be dead
+```

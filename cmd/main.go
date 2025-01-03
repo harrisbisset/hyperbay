@@ -1,49 +1,41 @@
 package main
 
 import (
-	"fmt"
-	"log"
 	"net/http"
 
+	"github.com/go-chi/chi/v5"
+	chimiddleware "github.com/go-chi/chi/v5/middleware"
 	"github.com/harrisbisset/webrelay/config"
 	"github.com/harrisbisset/webrelay/middleware"
 	"github.com/harrisbisset/webrelay/routes"
-	"github.com/harrisbisset/webrelay/toml"
+	"github.com/harrisbisset/webrelay/service"
 )
 
 func main() {
 	cfg := config.NewConfig()
-	mux := http.NewServeMux()
+	r := chi.NewRouter()
+
+	// middlewares
+	r.Use(chimiddleware.Logger)
 
 	// pages
-	mux.Handle("GET /", routes.IndexHandler{RelayConfig: cfg.RelayConfig})
+	r.Get("/", routes.IndexHandler{RelayConfig: cfg.RelayConfig}.ServeHTTP)
 
-	// site routes
-	site_len := len(cfg.Sites)
-	var prev_site toml.Site
-	var next_site toml.Site
-	for i, s := range cfg.Sites {
-		switch i {
-		case 0:
-			prev_site = cfg.Sites[site_len-1]
-			next_site = cfg.Sites[i+1]
-		case site_len - 1:
-			prev_site = cfg.Sites[i-1]
-			next_site = cfg.Sites[0]
-		default:
-			next_site = cfg.Sites[i+1]
-			prev_site = cfg.Sites[i-1]
-		}
-
-		mux.Handle(fmt.Sprintf("GET /route/%s/next", s.Slug), routes.RouteHandler{Site: next_site})
-		mux.Handle(fmt.Sprintf("GET /route/%s/prev", s.Slug), routes.RouteHandler{Site: prev_site})
+	for _, v := range service.GetRing(cfg.Sites) {
+		r.Get(v.Path, routes.RouteHandler{Site: v.Site}.ServeHTTP)
 	}
 
 	// api
-	mux.HandleFunc("GET /api/list", middleware.ValidateRelayConfig(routes.ListHandler{RelayConfig: cfg.RelayConfig}))
-	http.HandleFunc("GET /api/random", middleware.ValidateRelayConfig(routes.RandomHandler{RelayConfig: cfg.RelayConfig}))
+	r.Group(func(r chi.Router) {
+		r.Get("/api/list", routes.ListHandler{RelayConfig: cfg.RelayConfig}.ServeHTTP)
+		r.Get("/api/random", routes.RandomHandler{RelayConfig: cfg.RelayConfig}.ServeHTTP)
 
-	mux.HandleFunc("GET /api/refresh", middleware.AuthHash(routes.RefreshHandler{RelayConfig: cfg.RelayConfig}))
+		// auth
+		r.Group(func(r chi.Router) {
+			r.Use(middleware.AuthHash(cfg.Hash))
+			r.Get("/api/refresh", routes.RefreshHandler{RelayConfig: cfg.RelayConfig}.ServeHTTP)
+		})
+	})
 
-	log.Fatal(http.ListenAndServe(":8080", middleware.NewLogger(mux, cfg.Logger)))
+	http.ListenAndServe(":8080", r)
 }

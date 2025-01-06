@@ -5,10 +5,10 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	chimiddleware "github.com/go-chi/chi/v5/middleware"
-	"github.com/harrisbisset/webrelay/middleware"
-	"github.com/harrisbisset/webrelay/routes"
-	"github.com/harrisbisset/webrelay/routes/api"
-	"github.com/harrisbisset/webrelay/service"
+	"github.com/harrisbisset/hyperbay/hyperlist/server/middleware"
+	"github.com/harrisbisset/hyperbay/hyperlist/server/routes"
+	"github.com/harrisbisset/hyperbay/hyperlist/server/routes/api"
+	"github.com/harrisbisset/hyperbay/hyperlist/server/service"
 )
 
 func main() {
@@ -38,5 +38,5 @@ func main() {
 		})
 	})
 
-	http.ListenAndServe(":8080", r)
+	http.ListenAndServe(":80", r)
 }

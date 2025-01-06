@@ -1,4 +1,4 @@
-# Webring Server
+# Hyperlist Server
 
 ## relay.toml
 

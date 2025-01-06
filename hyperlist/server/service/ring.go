@@ -3,7 +3,7 @@ package service
 import (
 	"fmt"
 
-	"github.com/harrisbisset/webrelay/service/toml"
+	"github.com/harrisbisset/hyperbay/hyperlist/server/service/toml"
 )
 
 type sitePath struct {

@@ -3,7 +3,7 @@ package service
 import (
 	"log"
 
-	"github.com/harrisbisset/webrelay/service/toml"
+	"github.com/harrisbisset/hyperbay/hyperlist/server/service/toml"
 )
 
 type (

@@ -19,20 +19,19 @@ type (
 	}
 )
 
-const TOML_ERROR_NOT_FOUND = "relay.toml not found"
+const TOML_ERROR_NOT_FOUND = "hyperlist.toml not found"
 
-func ParseHyperlist() (listConfig, error) {
-	var cfg listConfig
-
-	doc, err := os.ReadFile("./relay.toml")
+func ParseHyperlist() (*listConfig, error) {
+	doc, err := os.ReadFile("./hyperlist.toml")
 	if err != nil {
-		return cfg, errors.New(TOML_ERROR_NOT_FOUND)
+		return nil, errors.New(TOML_ERROR_NOT_FOUND)
 	}
 
+	var cfg listConfig
 	err = toml.Unmarshal([]byte(doc), &cfg)
 	if err != nil {
-		return cfg, err
+		return nil, err
 	}
 
-	return cfg, nil
+	return &cfg, nil
 }

@@ -7,8 +7,7 @@ import (
 
 type (
 	SiteCache struct {
-		mu      sync.Mutex
-		handler *ListHandler
+		mu sync.Mutex
 
 		// time since last refresh
 		lastRefresh int64
@@ -26,11 +25,10 @@ type (
 	}
 )
 
-func NewCacheSite(handler *ListHandler, sites []Site) *SiteCache {
+func NewCacheSite(sites []Site) *SiteCache {
 	now := time.Now().Unix()
 
 	c := &SiteCache{
-		handler:     handler,
 		lastRefresh: now,
 		sites:       make([]SiteInfo, len(sites)),
 	}

@@ -3,7 +3,6 @@ package api
 import (
 	"encoding/json"
 	"log"
-	"math/rand/v2"
 	"net/http"
 
 	"github.com/harrisbisset/hyperbay/hyperlist/server/service/toml"
@@ -12,23 +11,23 @@ import (
 type (
 	// should respond to client with list of all sites, in json
 	ListHandler struct {
-		*toml.RelayConfig
+		*toml.ListHandler
 	}
 
 	// used to refresh the site list
 	// does not refresh any other data
 	RefreshHandler struct {
-		*toml.RelayConfig
+		*toml.ListHandler
 	}
 
 	// used to get a "random" site from the server
 	RandomHandler struct {
-		*toml.RelayConfig
+		*toml.ListHandler
 	}
 )
 
 func (handler ListHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	data, err := json.Marshal(handler.Sites)
+	data, err := json.Marshal(handler.Sites())
 	if err != nil {
 		log.Print(err)
 		http.Error(w, "failed to marshal json", http.StatusInternalServerError)
@@ -39,34 +38,22 @@ func (handler ListHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	w.Write(data)
 }
 
-func (handler ListHandler) GetRelayConfig() *toml.RelayConfig {
-	return handler.RelayConfig
-}
-
 func (handler RefreshHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	relay, err := toml.ParseRelay()
-	if err != nil {
+	if err := handler.ListHandler.RefreshHyperlist(); err != nil {
 		log.Print(err)
 		http.Error(w, "parse failed", http.StatusInternalServerError)
 		return
 	}
-
-	// update relay and respond
-	handler.RelayConfig.Sites = relay.Sites
 	w.WriteHeader(http.StatusOK)
 }
 
-func (handler RefreshHandler) GetRelayConfig() *toml.RelayConfig {
-	return handler.RelayConfig
-}
-
 func (handler RandomHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	log.Print("random")
-	log.Print(handler.Sites[rand.IntN(len(handler.Sites)-1)].Src)
+	site, err := handler.RandomSite()
+	if err != nil {
+		log.Print(err)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 
-	http.Redirect(w, r, handler.Sites[rand.IntN(len(handler.Sites)-1)].Src, http.StatusPermanentRedirect)
-}
-
-func (handler RandomHandler) GetRelayConfig() *toml.RelayConfig {
-	return handler.RelayConfig
+	http.Redirect(w, r, site.Src, http.StatusPermanentRedirect)
 }

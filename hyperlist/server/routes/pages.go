@@ -2,18 +2,18 @@ package routes
 
 import (
 	"net/http"
-	"text/template"
 
+	"github.com/harrisbisset/hyperbay/hyperlist/server/render/views/view_index"
 	"github.com/harrisbisset/hyperbay/hyperlist/server/service/toml"
 )
 
 type (
 	IndexHandler struct {
-		*toml.RelayConfig
+		*toml.ListHandler
 	}
 
 	ListHandler struct {
-		*toml.RelayConfig
+		*toml.ListHandler
 	}
 
 	RouteHandler struct {
@@ -22,15 +22,13 @@ type (
 )
 
 func (handler IndexHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	tmpl := template.Must(template.ParseFiles("./templates/index.go.html"))
-	tmpl.Execute(w, *handler.RelayConfig)
+	Render(view_index.Show(), w, r)
 }
 
 func (handler ListHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	tmpl := template.Must(template.ParseFiles("./templates/index.go.html"))
-	tmpl.Execute(w, *handler.RelayConfig)
+	Render(view_index.Show(), w, r)
 }
 
 func (handler RouteHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	http.Redirect(w, r, handler.Site.Src, http.StatusPermanentRedirect)
+	Render(view_index.Show(), w, r)
 }

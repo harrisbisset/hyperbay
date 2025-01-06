@@ -8,7 +8,7 @@ slug = "exmpl"
 name = "example"
 src = "https://www.example.com"
 url = "example.com"
-dead = true
+alive = true
 
 [[sites]]
 slug = "hb"

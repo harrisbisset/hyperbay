@@ -1,6 +1,6 @@
 # Hyperlist Server
 
-## relay.toml
+## hyperlist.toml
 
 ```toml
 hash = ""
@@ -14,3 +14,7 @@ src = "" # link to site
 url = "example.com" # display text for site link
 dead = true # whether link is dead, service will modify this field, if the link is found to be dead
 ```
+
+## TODO
+
+- Validate ListConfig with relfection

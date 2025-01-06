@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 
-# copies all server go files, and relay.toml, into /server directory
+# copies all server go files, and hyperlist.toml, into /server directory
 # and fetches go dependencies
 FROM golang:1.23.4 AS fetch-stage
 COPY /cmd /server/

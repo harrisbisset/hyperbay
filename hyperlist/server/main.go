@@ -22,10 +22,6 @@ func main() {
 	r.Get("/", routes.IndexHandler{ListHandler: cfg.ListHandler}.ServeHTTP)
 	r.Get("/list", routes.ListHandler{ListHandler: cfg.ListHandler}.ServeHTTP)
 
-	// for _, v := range service.GetRing(cfg.Sites) {
-	// 	r.Get(v.Path, routes.RouteHandler{Site: v.Site}.ServeHTTP)
-	// }
-
 	// api
 	r.Group(func(r chi.Router) {
 		r.Get("/api/list", api.ListHandler{ListHandler: cfg.ListHandler}.ServeHTTP)

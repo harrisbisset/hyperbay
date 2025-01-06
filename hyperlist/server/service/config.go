@@ -11,7 +11,9 @@ type (
 )
 
 func NewConfig() Config {
+	listHandler := toml.NewListHander()
+
 	return Config{
-		ListHandler: toml.NewListHander(),
+		ListHandler: listHandler,
 	}
 }

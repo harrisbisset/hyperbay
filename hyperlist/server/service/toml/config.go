@@ -2,41 +2,52 @@ package toml
 
 import (
 	"errors"
+	"iter"
 	"math/rand/v2"
 	"sync"
 )
 
 type (
-	listConfig struct {
+	Site struct {
+		Id      int    `toml:"id"`
+		Slug    string `toml:"slug"`
+		Name    string `toml:"name"`
+		Src     string `toml:"src"`
+		Url     string `toml:"url"`
+		Created int64
+		Alive   bool
+	}
+
+	tomlConfig struct {
 		mu sync.Mutex
 
 		hash      string `toml:"hash"`
 		hostUser  string `toml:"hostUser"`
 		hostEmail string `toml:"hostEmail"`
-		sites     []Site `toml:"sites"`
+		sites     []Site
 	}
 
 	ListHandler struct {
-		*listConfig
+		*tomlConfig
 		cache *SiteCache
 	}
 )
 
-func (cfg *listConfig) Hash() string {
+func (cfg *tomlConfig) Hash() string {
 	return cfg.hash
 }
 
-func (cfg *listConfig) HostUser() string {
+func (cfg *tomlConfig) HostUser() string {
 	return cfg.hostUser
 }
 
-func (cfg *listConfig) HostEmail() string {
+func (cfg *tomlConfig) HostEmail() string {
 	return cfg.hostEmail
 }
 
 // gets a random alive site from the site list
 // errors if no alive sites are found
-func (cfg *listConfig) RandomSite() (Site, error) {
+func (cfg *tomlConfig) RandomSite() (Site, error) {
 	cfg.mu.Lock()
 	defer cfg.mu.Unlock()
 
@@ -74,11 +85,23 @@ func (handler *ListHandler) Sites() []Site {
 	return handler.sites
 }
 
+func (handler *ListHandler) IterSites() iter.Seq[Site] {
+	return func(yield func(Site) bool) {
+		for _, site := range handler.sites {
+			if !yield(site) {
+				return
+			}
+		}
+	}
+}
+
 func (handler *ListHandler) RefreshHyperlist() error {
-	handler.listConfig.mu.Lock()
+	handler.tomlConfig.mu.Lock()
 	handler.cache.mu.Lock()
-	defer handler.listConfig.mu.Unlock()
+	defer handler.tomlConfig.mu.Unlock()
 	defer handler.cache.mu.Unlock()
+
+	// todo
 
 	return nil
 }
@@ -90,7 +113,7 @@ func NewListHander() *ListHandler {
 	}
 
 	return &ListHandler{
-		listConfig: cfg,
+		tomlConfig: cfg,
 		cache:      NewCacheSite(cfg.sites),
 	}
 }

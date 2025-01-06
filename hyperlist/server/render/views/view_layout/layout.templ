@@ -1,13 +1,15 @@
 package view_layout
 
-import "github.com/harrisbisset/hyperbay/hyperlist/server/models"
+import "github.com/harrisbisset/hyperbay/hyperlist/server/service/toml"
 
-templ Meta(cfg models.ClientConfig) {
-    <!doctype html>
-    <html>
-        <head>
-            <title></title>
-        </head>
-        <body></body>
-    </html>
+templ Meta(handler toml.ListHandler) {
+	<!DOCTYPE html>
+	<html>
+		<head>
+			<title></title>
+		</head>
+		<body>
+			{ children... }
+		</body>
+	</html>
 }

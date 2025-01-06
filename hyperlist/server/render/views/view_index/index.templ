@@ -1,5 +1,11 @@
 package view_index
 
-templ Show() {
-    
+import (
+	"github.com/harrisbisset/hyperbay/hyperlist/server/render/views/view_layout"
+	"github.com/harrisbisset/hyperbay/hyperlist/server/service/toml"
+)
+
+templ Show(handler toml.ListHandler) {
+	@view_layout.Meta(handler) {
+	}
 }

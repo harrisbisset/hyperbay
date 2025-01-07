@@ -7,9 +7,27 @@ templ Meta(handler toml.ListHandler) {
 	<html>
 		<head>
 			<title></title>
+			<link rel="stylesheet" href="/public/tailwind.css"/>
 		</head>
-		<body>
-			{ children... }
+		<body class="flex justify-center items-center bg-gray-200">
+			<div class="w-full max-w-5xl mt-8 py-2 px-3 bg-white border-[1px] border-solid border-black">
+				<header class="flex justify-center items-center">
+					<div class="flex flex-row w-fit items-center">
+						@headerSVG()
+						<span class="text-3xl px-1">Hyperlist</span>
+						@headerSVG()
+					</div>
+				</header>
+				<main>
+					{ children... }
+				</main>
+			</div>
 		</body>
 	</html>
+}
+
+templ headerSVG() {
+	<svg class="mt-2" width="40" height="10" xmlns="http://www.w3.org/2000/svg">
+		<rect width="40" height="10" fill="#3c43c9"></rect>
+	</svg>
 }

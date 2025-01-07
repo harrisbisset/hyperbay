@@ -34,5 +34,7 @@ func main() {
 		})
 	})
 
+	r.Handle("/public/*", http.StripPrefix("/public/", http.FileServer(http.Dir("./render/public"))))
+
 	http.ListenAndServe(":80", r)
 }

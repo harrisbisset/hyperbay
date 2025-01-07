@@ -46,7 +46,7 @@ func Show(handler toml.ListHandler) templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div style=\"overflow: hidden; max-width: 100vw; font-family: sans-serif; display: flex; width: 100%; align-items: center; justify-content: center;\"><div style=\"display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%;max-width: 640px;\"><h1 style=\"font-weight:bold; text-transform: uppercase; font-size: 40px; padding-bottom: 40px;\">Hyperlist</h1><table style=\"width: 90%; margin-top: 70px;\"><thead><tr style=\"font-size: larger;\"><th style=\"text-align: left; border-bottom: 1px solid #ccc;\">Slug</th><th style=\"text-align: left; border-bottom: 1px solid #ccc;\">Name</th><th style=\"text-align: left; border-bottom: 1px solid #ccc;\">Url</th></tr></thead> <tbody style=\"padding-top: 4px;\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"flex flex-col items-center justify-center w-full\"><table class=\"w-full max-w-[640px] mt-14\"><thead><tr style=\"font-size: larger;\"><th style=\"text-align: left; border-bottom: 1px solid #ccc;\">Slug</th><th style=\"text-align: left; border-bottom: 1px solid #ccc;\">Name</th><th style=\"text-align: left; border-bottom: 1px solid #ccc;\">Url</th></tr></thead> <tbody style=\"padding-top: 4px;\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -58,7 +58,7 @@ func Show(handler toml.ListHandler) templ.Component {
 				var templ_7745c5c3_Var3 string
 				templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(s.Slug)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `render/views/view_list/list.templ`, Line: 33, Col: 98}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `render/views/view_list/list.templ`, Line: 22, Col: 97}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 				if templ_7745c5c3_Err != nil {
@@ -71,7 +71,7 @@ func Show(handler toml.ListHandler) templ.Component {
 				var templ_7745c5c3_Var4 string
 				templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(s.Name)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `render/views/view_list/list.templ`, Line: 34, Col: 98}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `render/views/view_list/list.templ`, Line: 23, Col: 97}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 				if templ_7745c5c3_Err != nil {
@@ -93,7 +93,7 @@ func Show(handler toml.ListHandler) templ.Component {
 				var templ_7745c5c3_Var6 string
 				templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(s.Url)
 				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `render/views/view_list/list.templ`, Line: 41, Col: 17}
+					return templ.Error{Err: templ_7745c5c3_Err, FileName: `render/views/view_list/list.templ`, Line: 30, Col: 16}
 				}
 				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 				if templ_7745c5c3_Err != nil {
@@ -104,7 +104,7 @@ func Show(handler toml.ListHandler) templ.Component {
 					return templ_7745c5c3_Err
 				}
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</tbody></table></div></div>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</tbody></table></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

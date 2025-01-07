@@ -31,7 +31,7 @@ func Meta(handler toml.ListHandler) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<!doctype html><html><head><title></title><link rel=\"stylesheet\" href=\"/public/tailwind.css\"></head><body class=\"flex justify-center items-center bg-gray-200\"><div class=\"w-full max-w-5xl mt-8 py-2 px-3 bg-white border-[1px] border-solid border-black\"><header class=\"flex justify-center items-center\"><div class=\"flex flex-row w-fit items-center\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<!doctype html><html><head><title></title><link rel=\"stylesheet\" href=\"/public/tailwind.css\"><script defer src=\"/public/htmx.min.js\"></script></head><body class=\"flex justify-center items-center bg-gray-200\"><div class=\"w-full max-w-5xl mt-8 py-2 px-3 bg-white border-[1px] border-solid border-black\"><header class=\"flex flex-col justify-center items-center gap-y-3\"><div class=\"flex flex-row w-fit items-center\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -47,7 +47,7 @@ func Meta(handler toml.ListHandler) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</div></header><main>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "</div><nav class=\"flex flex-row gap-x-6 select-none\"><span hx-get=\"/\" hx-target=\"body\" hx-replace-url=\"true\" hx-push-url=\"true\" class=\"w-fit cursor-pointer px-1 bg-amber-300 hover:bg-amber-500 hover:text-amber-300\">index</span> <span hx-get=\"/list\" hx-target=\"body\" hx-replace-url=\"true\" hx-push-url=\"true\" class=\"w-fit cursor-pointer px-1 bg-purple-300 hover:bg-purple-500 hover:text-purple-300\">list</span> <span hx-get=\"/archive\" hx-target=\"body\" hx-replace-url=\"true\" hx-push-url=\"true\" class=\"w-fit cursor-pointer px-1 bg-red-300 hover:bg-red-500 hover:text-red-300\">archive</span></nav></header><main>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

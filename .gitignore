@@ -1,6 +1,9 @@
 # editor files
 .vscode
 
+# databases
+hyperlist.db
+
 # Binaries for programs and plugins
 *.exe
 *.exe~

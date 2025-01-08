@@ -13,6 +13,7 @@ import (
 
 func main() {
 	cfg := service.NewConfig()
+	defer cfg.Close()
 	r := chi.NewRouter()
 
 	// middlewares

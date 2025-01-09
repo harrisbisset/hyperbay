@@ -31,7 +31,7 @@ func Meta(handler toml.ListHandler) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<!doctype html><html><head><title></title><link rel=\"stylesheet\" href=\"/public/tailwind.css\"><script defer src=\"/public/htmx.min.js\"></script><script defer src=\"/public/layout.js\"></script></head><body class=\"flex justify-center bg-gray-200 h-full\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<!doctype html><html><head><title></title><link rel=\"stylesheet\" href=\"/public/tailwind.css\"><script defer src=\"/public/htmx.min.js\"></script></head><body class=\"flex justify-center bg-gray-200 h-full\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -129,7 +129,7 @@ func header() templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</nav></div><div class=\"w-full h-[2px] bg-red-600\"></div></header>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</nav></div><div class=\"w-full h-[2px] bg-red-600\"></div></header><script defer src=\"/public/layout.js\"></script>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

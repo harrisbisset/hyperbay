@@ -1,4 +1,4 @@
-let current_event = "mouseout"
+var current_event = current_event || "mouseout"
 
 document.getElementById("prefix-hyper-header").addEventListener("mouseover", (e) => {
     if (current_event == "mouseout") {

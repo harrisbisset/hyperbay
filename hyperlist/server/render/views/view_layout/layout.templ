@@ -9,7 +9,6 @@ templ Meta(handler toml.ListHandler) {
 			<title></title>
 			<link rel="stylesheet" href="/public/tailwind.css"/>
 			<script defer src="/public/htmx.min.js"></script>
-			<script defer src="/public/layout.js"></script>
 		</head>
 		<body class="flex justify-center bg-gray-200 h-full">
 			@stripes()
@@ -64,6 +63,7 @@ templ header() {
 		</div>
 		<div class="w-full h-[2px] bg-red-600"></div>
 	</header>
+	<script defer src="/public/layout.js"></script>
 }
 
 templ navItem(text, src string) {

@@ -7,7 +7,8 @@ import (
 )
 
 type DBConfig struct {
-	*sql.DB
+	Read  *sql.DB
+	Write *sql.DB
 }
 
 func CreateDBConfig() DBConfig {
@@ -45,7 +46,9 @@ func CreateDBConfig() DBConfig {
 		}
 	}
 
+	// todo make different db conns
 	return DBConfig{
-		DB: db,
+		Write: db,
+		// Read:  db,
 	}
 }

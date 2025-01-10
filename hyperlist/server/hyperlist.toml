@@ -14,3 +14,9 @@ slug = "hb"
 name = "harris bisset"
 src = "https://bisset.dev"
 url = "bisset.dev"
+
+[[sites]]
+slug = "dead"
+name = "dead link - not real"
+src = "https://www.google.com/404"
+url = "404"

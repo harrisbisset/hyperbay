@@ -1,7 +1,12 @@
 package main
 
 import (
+	"context"
+	"errors"
+	"log"
 	"net/http"
+	"os/signal"
+	"syscall"
 
 	"github.com/go-chi/chi/v5"
 	chimiddleware "github.com/go-chi/chi/v5/middleware"
@@ -19,23 +24,44 @@ func main() {
 	// middlewares
 	r.Use(chimiddleware.Logger)
 
-	// pages
-	r.Get("/", routes.IndexHandler{ListHandler: cfg.ListHandler}.ServeHTTP)
-	r.Get("/list", routes.ListHandler{ListHandler: cfg.ListHandler}.ServeHTTP)
+	{ // routes
 
-	// api
-	r.Group(func(r chi.Router) {
-		r.Get("/api/list", api.ListHandler{ListHandler: cfg.ListHandler}.ServeHTTP)
-		r.Get("/api/random", api.RandomHandler{ListHandler: cfg.ListHandler}.ServeHTTP)
+		//pages
+		r.Get("/", routes.IndexHandler{ListHandler: cfg.ListHandler}.ServeHTTP)
+		r.Get("/list", routes.ListHandler{ListHandler: cfg.ListHandler}.ServeHTTP)
 
-		// auth
+		// api
 		r.Group(func(r chi.Router) {
-			r.Use(middleware.AuthHash(cfg.Hash()))
-			r.Get("/api/refresh", api.RefreshHandler{ListHandler: cfg.ListHandler}.ServeHTTP)
+			r.Get("/api/list", api.ListHandler{ListHandler: cfg.ListHandler}.ServeHTTP)
+			r.Get("/api/random", api.RandomHandler{ListHandler: cfg.ListHandler}.ServeHTTP)
+
+			// auth
+			r.Group(func(r chi.Router) {
+				r.Use(middleware.AuthHash(cfg.Hash()))
+				r.Get("/api/refresh", api.RefreshHandler{ListHandler: cfg.ListHandler}.ServeHTTP)
+			})
 		})
-	})
 
-	r.Handle("/public/*", http.StripPrefix("/public/", http.FileServer(http.Dir("./render/public"))))
+		// static
+		r.Handle("/public/*", http.StripPrefix("/public/", http.FileServer(http.Dir("./render/public"))))
+	}
 
-	http.ListenAndServe(":80", r)
+	server := http.Server{
+		Addr:    ":80",
+		Handler: r,
+	}
+
+	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
+	defer stop()
+	go func() {
+		if err := server.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
+			log.Fatalf("listen and serve returned err: %v", err)
+		}
+	}()
+
+	<-ctx.Done()
+	log.Println("got interruption signal")
+	if err := server.Shutdown(context.TODO()); err != nil {
+		log.Printf("server shutdown returned an err: %v\n", err)
+	}
 }

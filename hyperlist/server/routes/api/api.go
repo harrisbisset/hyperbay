@@ -5,24 +5,24 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/harrisbisset/hyperbay/hyperlist/server/service/toml"
+	"github.com/harrisbisset/hyperbay/hyperlist/server/service/cache"
 )
 
 type (
 	// should respond to client with list of all sites, in json
 	ListHandler struct {
-		*toml.ListHandler
+		*cache.Cache
 	}
 
 	// used to refresh the site list
 	// does not refresh any other data
 	RefreshHandler struct {
-		*toml.ListHandler
+		*cache.Cache
 	}
 
 	// used to get a "random" site from the server
 	RandomHandler struct {
-		*toml.ListHandler
+		*cache.Cache
 	}
 )
 
@@ -39,7 +39,7 @@ func (handler ListHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func (handler RefreshHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-	if err := handler.ListHandler.RefreshHyperlist(); err != nil {
+	if err := handler.Cache.RefreshHyperlist(); err != nil {
 		log.Print(err)
 		http.Error(w, "parse failed", http.StatusInternalServerError)
 		return

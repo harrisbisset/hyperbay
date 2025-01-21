@@ -1,13 +1,14 @@
 package service
 
 import (
+	"github.com/harrisbisset/hyperbay/hyperlist/server/service/cache"
 	"github.com/harrisbisset/hyperbay/hyperlist/server/service/database"
 	"github.com/harrisbisset/hyperbay/hyperlist/server/service/toml"
 )
 
 type (
 	Config struct {
-		*toml.ListHandler
+		*cache.Cache
 		database.DBConfig
 	}
 )
@@ -17,7 +18,7 @@ func (cfg Config) Close() {
 }
 
 func NewConfig() Config {
-	listHandler := toml.NewListHander()
+	listHandler := toml.NewCache()
 
 	return Config{
 		DBConfig:    database.CreateDBConfig(),
